@@ -5,6 +5,11 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm,ProfileForm,NewReviewForm
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializer import ProjectSerializer
+from .serializer import ProfileSerializer
+from rest_framework import status
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -63,18 +68,16 @@ def profile(request):
         profile = Profile.objects.get(profile=current_user)
 
     return render(request, 'profile/profile.html',{'projects':projects,'profile':profile})
-
+@login_required
 def edit_profile(request):
     current_user = request.user
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES,instance = request.user.profile)
         if form.is_valid():
-            profile = form.save(commit = False)
-            profile.project = current_user
-            profile.save()
+            form.save()
         return redirect('Profile')
     else:
-        form = ProfileForm()
+        form = ProfileForm(instance = request.user.profile)
     return render(request,'profile/edit_profile.html',{'form':form})
 
 def search_results(request):
@@ -98,7 +101,17 @@ def search_project(request,project_id):
         raise Http404()
     return render(request, 'project_details.html', {'project':project})
 
+class ProjectList(APIView):
+   def get(self,request,format=None):
+       all_projects=Project.objects.all()
+       serializers=ProjectSerializer(all_projects,many=True)
+       return Response(serializers.data)
 
+class ProfileList(APIView):
+   def get(self,request,format=None):
+       all_profiles=Profile.objects.all()
+       serializers=ProfileSerializer(all_profiles,many=True)
+       return Response(serializers.data)
 
 
 

@@ -9,7 +9,7 @@ class ProjectForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ['profile']
+        fields = ['photo','bio']
 
 class NewReviewForm(forms.ModelForm):
     class Meta:

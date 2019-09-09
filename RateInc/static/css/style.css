@@ -1,0 +1,8 @@
+.sanii{
+    /* background-image: url('../css/img/login-bg.jpg'); */
+    background:url('../css/img/login-bg.jpg');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

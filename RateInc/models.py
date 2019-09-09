@@ -11,8 +11,6 @@ class Profile(models.Model):
     photo = models.ImageField(upload_to = 'profile/',default='fbfba5feddcfae6c24fa528c7749eafc.jpg' ,blank = True)
     bio = models.TextField(max_length=500)
 
-    def __str__(self):
-     return self.profile.username
     def save_profile(self):
         self.save()
     def delete_profile(self):

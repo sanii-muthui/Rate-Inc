@@ -11,13 +11,51 @@
                     </div>
                     <div class="card-body">
                             <img src="{{project.image.url}}"  class="card-img-top" alt="">
-                            <p><b>description:</b><br>{{project.description}}</p>
-                            <p class="text-center"><b>live~link: </b><br><a href="{{project.link}}">{{project.link}}</a></p>
+                            <p style="text-align: center"><b>description:</b><br>{{project.description}}</p>
+                            <button type="button" class="btn btn-primary"><a href="{{project.link}}" style="color: aliceblue">View Webisite</a></button>
+                            <button type="button" class="btn btn-primary"><a data-toggle='modal' data-target='#reviewModal'>Rate</a></button>
+                            <!-- <p class="text-center"><b>live~link: </b><br><a href="{{project.link}}">{{project.link}}</a></p> -->
                     </div>
                     <div class="card-footer">
-                            <a href="#">Userinterface:<i class="fa fa-thumbs-up" style="font-size: 30px;">{{project.userinterface}} </a></i>
-                            <a href="#">Functionality:<i class="fa fa-thumbs-up" style="font-size: 30px;">{{project.functionality}} </a></i>
-                            <a href="#">Content:<i class="fa fa-thumbs-up" style="font-size: 30px;">{{project.content}} </a></i>
+                          <p class="form-control">Design:{{project.design}}</p>
+                          <p class="form-control">Functionality:{{project.functionality}}</p>
+                          <p class="form-control">Userinterface{{project.userinterface}}</p>
+                          <p class="form-control">Content:{{project.content}}</p>
+                          <p class="form-control">Average Rating:{{project.average_review}}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-2"></div>
+             </div>
+             <!-- modal update form -->
+             <div class="modal" id="reviewModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Rate</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                            <form action="" method='POST' enctype="multipart/form-data">
+                                {% csrf_token %}
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-4"></legend>
+                                {% bootstrap_form form%}
+                            </fieldset>
+                            <div class="form-group">
+                                <button class="btn btn-outline-primary" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
                             
                             
             

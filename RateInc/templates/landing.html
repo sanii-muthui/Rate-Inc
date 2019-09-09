@@ -5,16 +5,18 @@
 
 {% block content %}
 {{block.super}}
-<div class="container">
+<div class="container" style="overflow-y:scroll;height: 90vh;margin-top: 90px;">
     <div class="row">
-            {% for post in projects %}
+    {% for post in projects %}
     <div class="col-md-6">
         <div class="card">
             <h3 id="post-title" class="card-header text-center">{{post.title}}</h3>
             <a class="img-post" href="{% url 'projects' post.id %}"><img src="{{post.image.url}}" class="img-fluid" alt="Project"></a>
-            posted by:{{post.profile.username}}
-            
-        </div>
+        <div class="card-footer">
+                <h5>posted by:{{post.profile.username}}</h5>
+        </div> 
+        </div>&nbsp;
+
     </div>
     {% endfor %}
     </div> 
