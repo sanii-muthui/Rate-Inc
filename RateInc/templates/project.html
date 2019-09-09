@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container">
+    <div class="col-md-8">
+        </style>
+            <div class="card">
+                    <div class="card-header">
+                            <img src="{{profile.photo.url}}"  style="border-radius: 50%;height:50px; width: 50px;" class="card-img-top" alt="">{{request.user.username}}
+                            <p>{{project.date_posted}}</p>
+                    </div>
+                    <div class="card-body">
+                            <img src="{{project.image.url}}"  class="card-img-top" alt="">
+                            <p><b>description:</b><br>{{project.description}}</p>
+                            <p class="text-center"><b>live~link: </b><br><a href="{{project.link}}">{{project.link}}</a></p>
+                    </div>
+                    <div class="card-footer">
+                            <a href="#">Userinterface:<i class="fa fa-thumbs-up" style="font-size: 30px;">{{project.userinterface}} </a></i>
+                            <a href="#">Functionality:<i class="fa fa-thumbs-up" style="font-size: 30px;">{{project.functionality}} </a></i>
+                            <a href="#">Content:<i class="fa fa-thumbs-up" style="font-size: 30px;">{{project.content}} </a></i>
+                            
+                            
+            
+                    </div>
+                </div>
+    </div>
+    </div>
+    {% endblock %}

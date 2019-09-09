@@ -1,0 +1,33 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    {% if title %}
+    <title>Rate-Inc{{title}}</title>
+    {% else %}
+    <title>Rate-Inc</title>
+    {% endif %}
+    {% block styles %}
+    {% bootstrap_css %}
+
+    {% endblock %}
+</head>
+
+<body style="overflow-x:hidden" id="san">
+    {% include "navbar.html" %}
+    
+
+    {% block content %}
+    {%endblock%}
+    {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% bootstrap_javascript %}
+    {% endblock %}
+</body>
+
+</html>

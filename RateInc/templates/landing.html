@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{% load staticfiles %}
+{% load static%}
+
+{% block content %}
+{{block.super}}
+<div class="container">
+    <div class="row">
+            {% for post in projects %}
+    <div class="col-md-6">
+        <div class="card">
+            <h3 id="post-title" class="card-header text-center">{{post.title}}</h3>
+            <a class="img-post" href="{% url 'projects' post.id %}"><img src="{{post.image.url}}" class="img-fluid" alt="Project"></a>
+            posted by:{{post.profile.username}}
+            
+        </div>
+    </div>
+    {% endfor %}
+    </div> 
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <p>by:{{project.profile}}</p>
+        <h1 class="text-center">{{project.title}}</h1>
+        <img src="{{project.image.url}}" width="1000px" height="500px" class="img-fluid" alt="">
+        <p class="text-center">{{project.description}}</p>
+
+    </div>
+</div>
+
+{% endblock %}
