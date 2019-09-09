@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404
-from .models import Project,Profile
+from .models import Project,Profile,Review
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-from .forms import ProjectForm,ProfileForm,VoteForm
+from .forms import ProjectForm,ProfileForm,NewReviewForm
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -15,25 +15,27 @@ def index(request):
 
 def project(request,project_id):
     project = Project.objects.get(id = project_id)
-    rating = round(((project.userinterface + project.functionality )/2),2)
-    if request.method == 'POST':
-        form = VoteForm(request.POST)
-        if form.is_valid:
-            if project.userinterface == 0:
-                project.userinterface = int(request.POST['userinterface'])
-            else:
-                project.userinterface = (project.userinterface + int(request.POST['userinterface']))/2
-            if project.functionality == 0:
-                project.functionality = int(request.POST['functionality'])
-            else:
-                project.functionality = (project.userinterface + int(request.POST['functionality']))/2
-            if project.content == 0:
-                project.content = int(request.POST['content'])
-            else:
-                project.content = (project.design + int(request.POST['content']))/2
+    reviews=Review.get_all_reviews(project_id)
+    project.design=reviews['design']
+    project.userinterface=reviews['userinterface']
+    project.functionality=reviews['functionality']
+    project.content=reviews['content']
+    project.average_review=reviews['average_review']
+    project.save()
+    current_user=request.user
+    if request.method=='POST':
+        form=NewReviewForm(request.POST)
+        if form.is_valid():
+            review=form.save(commit=False)
+            review.judge=current_user
+            review.project=project
+            
+            review.save()
+            messages.success(request,f'Review Submitted')
+            return redirect('project-detail',project_id)
     else:
-        form = VoteForm()
-    return render(request,'project.html',{'form':form,'project':project,'rating':rating})
+        form=NewReviewForm()  
+    return render(request,'project.html',{'form':form,'project':project})
 
 @login_required(login_url='/accounts/login/')
 def new_project(request):
@@ -49,30 +51,6 @@ def new_project(request):
     else:
         form = ProjectForm()
     return render(request, 'new_post.html', {"form": form})
-
-def vote_project(request, project_id):
-    project = Project.objects.get(id=project_id)
-    rating = round(((project.userinterface + project.functionality)/2),2)
-    if request.method == 'POST':
-        form = VoteForm(request.POST)
-        if form.is_valid:
-            if project.userinterface == 0:
-                project.userinterface = int(request.POST['userinterface'])
-            else:
-                project.userinterface = (project.userinterface + int(request.POST['userinterface']))/2
-            if project.functionality == 0:
-                project.functionality = int(request.POST['functionality'])
-            else:
-                project.functionality = (project.userinterface + int(request.POST['functionality']))/2
-            if project.content == 0:
-                project.content = int(request.POST['content'])
-            else:
-                project.content = (project.design + int(request.POST['content']))/2
-            
-    else:
-        form = VoteForm()
-    return render(request,'vote.html',{'form':form,'project':project,'rating':rating})
-
 
 def profile(request):
     current_user = request.user
