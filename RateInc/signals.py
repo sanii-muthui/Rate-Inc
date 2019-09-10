@@ -8,6 +8,7 @@ def create_review(sender,instance,created,**kwargs):
     if created:
         Review.objects.create(project=instance)
 
+
 @receiver(post_save, sender=User)
 def create_profile(sender,instance,created,**kwargs):
     if created:
