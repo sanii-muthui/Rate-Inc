@@ -13,7 +13,6 @@ urlpatterns=[
     url(r'^project-detail/(\d+)',views.search_project,name = 'project-detail'),
     url(r'^api/projects/$', views.ProjectList.as_view()),
     url(r'^api/profiles/$', views.ProfileList.as_view()),
-
 ]
 
 if settings.DEBUG:
