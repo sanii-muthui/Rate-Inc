@@ -1,6 +1,7 @@
 from django import forms
 from .models import Profile, Project,Review
 
+
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
