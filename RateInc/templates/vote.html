@@ -20,9 +20,7 @@
     {% endblock %}
 
 </head>
-
 <body>
-
     <form action="/projects/{{project.id}}" method="post" enctype="multipart/form-data">
         {%csrf_token%}
         {% bootstrap_form form%}
